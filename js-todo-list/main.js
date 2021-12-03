@@ -1,18 +1,26 @@
 // TO DO
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function (ha) {
 
   const checkList = document.querySelector('.ul_wrapper');
 
-  // console.log(checkList);
-  // console.log(checkBox.item);
+  const removeList = document.querySelector('span.close');
+
+  // console.log(removeList);
 
     checkList.addEventListener('click', function (event) {
-      const target = event.target;
-      if (target.classList.contains('checked') === false) {
+      const checkedTarget = event.target;
+      if (checkedTarget.classList.contains('checked') === false) {
         // console.log(event.currentTarget);
-        target.classList.add('checked');
+        checkedTarget.classList.add('checked');
       } else {
-        target.classList.remove('checked');
+        checkedTarget.classList.remove('checked');
       };
     });
-	});
+
+    checkList.addEventListener('click', function (remove) {
+      const deletedTarget = remove.target;
+      if (deletedTarget.classList.contains('close') === true) {
+        deletedTarget.parentNode.remove();
+        };
+    });
+  });
