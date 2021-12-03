@@ -1,13 +1,13 @@
 // TO DO
 document.addEventListener("DOMContentLoaded", function (ha) {
 
-  const checkList = document.querySelector('.ul_wrapper');
+  // const checkList = document.querySelectorAll('ul li');
 
-  const removeList = document.querySelector('span.close');
+  const checkList = document.querySelector('ul');
+  const checkListLi = document.querySelector('li');
+  const inputValue = document.querySelector('#input');
 
-  // console.log(removeList);
-
-    checkList.addEventListener('click', function (event) {
+  checkList.addEventListener('click', function (event) {
       const checkedTarget = event.target;
       if (checkedTarget.classList.contains('checked') === false) {
         // console.log(event.currentTarget);
@@ -23,4 +23,30 @@ document.addEventListener("DOMContentLoaded", function (ha) {
         deletedTarget.parentNode.remove();
         };
     });
+
+    document.querySelector('#addBtn').addEventListener('click', function (add) {
+      const newToDo = document.createElement('li');
+      newToDo.innerText = inputValue.value.trim();
+      checkList.insertAdjacentElement('afterbegin', newToDo);
+      
+      const newSpan = document.createElement('span');
+      newToDo.insertAdjacentElement('afterbegin', newSpan);
+      newSpan.className = "close";
+      newSpan.innerText = "x";
+    });
+
+    document.querySelector('#input').addEventListener('keydown', function (press) {
+      if (press.key === "Enter" && press.target.value.trim() !== "") {
+
+      const newToDo = document.createElement('li');
+      newToDo.innerText = inputValue.value.trim();
+      checkList.insertAdjacentElement('afterbegin', newToDo);
+      
+      const newSpan = document.createElement('span');
+      newToDo.insertAdjacentElement('afterbegin', newSpan);
+      newSpan.className = "close";
+      newSpan.innerText = "x";
+    };
   });
+
+});
