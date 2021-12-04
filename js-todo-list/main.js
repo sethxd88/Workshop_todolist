@@ -49,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function (ha) {
   });
 
 
+  //Test
   // var checkList = document.querySelector('ul');
 
   // var allList = document.getElementsByClassName('close');
