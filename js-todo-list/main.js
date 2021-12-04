@@ -3,8 +3,7 @@ document.addEventListener("DOMContentLoaded", function (ha) {
 
   // const checkList = document.querySelectorAll('ul li');
 
-  const checkList = document.querySelector('ul');
-  const checkListLi = document.querySelector('li');
+  var checkList = document.querySelector('ul');
   const inputValue = document.querySelector('#input');
 
   checkList.addEventListener('click', function (event) {
@@ -48,5 +47,37 @@ document.addEventListener("DOMContentLoaded", function (ha) {
       newSpan.innerText = "x";
     };
   });
+
+
+  var checkList = document.querySelector('ul');
+
+  var allList = document.getElementsByClassName('close');
+
+  console.log(allList);
+
+  // console.log(Object.keys(allList));
+
+  // if(!localStorage.getItem('close')) {
+  //   populateStorage();
+  // } else {
+  //   setList();
+  // }
+  
+  // function populateStorage() {
+  //   localStorage.setItem('close', document.getElementsByClassName('close').value);
+
+  //   setList();
+  // }
+
+
+  // function setList() {
+  //   var currentList = localStorage.getItem('close');
+
+  //   document.getElementsByClassName('close').value = currentList;
+  //   // console.log(Object.keys(currentList));
+  // }
+
+  // allList.onchange = populateStorage;
+
 
 });
