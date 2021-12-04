@@ -49,11 +49,11 @@ document.addEventListener("DOMContentLoaded", function (ha) {
   });
 
 
-  var checkList = document.querySelector('ul');
+  // var checkList = document.querySelector('ul');
 
-  var allList = document.getElementsByClassName('close');
+  // var allList = document.getElementsByClassName('close');
 
-  console.log(allList);
+  // console.log(allList);
 
   // console.log(Object.keys(allList));
 
