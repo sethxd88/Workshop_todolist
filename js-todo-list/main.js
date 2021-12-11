@@ -1,84 +1,84 @@
 // TO DO
-document.addEventListener("DOMContentLoaded", function (ha) {
+document.addEventListener('DOMContentLoaded', function () {
+  let storageData = getStorage()
+  storageData.forEach((data) => createItem(data))
 
-  // const checkList = document.querySelectorAll('ul li');
+  document.querySelector('ul').addEventListener('click', function (e) {
+    let storageData = getStorage()
 
-  var checkList = document.querySelector('ul');
-  const inputValue = document.querySelector('#input');
+    if (e.target.nodeName === 'LI') {
+      e.target.classList.toggle('checked')
+      let id = e.target.dataset.id
+      storageData.forEach((data) => {
+        if (data.id == id) {
+          return data.checked = !data.checked
+        }
+      })
 
-  checkList.addEventListener('click', function (event) {
-      const checkedTarget = event.target;
-      if (checkedTarget.classList.contains('checked') === false) {
-        // console.log(event.currentTarget);
-        checkedTarget.classList.add('checked');
-      } else {
-        checkedTarget.classList.remove('checked');
-      };
-    });
+      setStorage(storageData)
+    }
 
-    checkList.addEventListener('click', function (remove) {
-      const deletedTarget = remove.target;
-      if (deletedTarget.classList.contains('close') === true) {
-        deletedTarget.parentNode.remove();
-        };
-    });
+    if (e.target.nodeName === 'SPAN') {
+      let id = e.target.parentNode.dataset.id
+      e.target.parentNode.remove()
+      let removeItem = storageData.filter(data => data.id !== id)
+      setStorage(removeItem)
+    }
+  })
 
-    document.querySelector('#addBtn').addEventListener('click', function (add) {
-      const newToDo = document.createElement('li');
-      newToDo.innerText = inputValue.value.trim();
-      checkList.insertAdjacentElement('afterbegin', newToDo);
-      
-      const newSpan = document.createElement('span');
-      newToDo.insertAdjacentElement('afterbegin', newSpan);
-      newSpan.className = "close";
-      newSpan.innerText = "x";
-    });
+  document.querySelector('#input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      addItem(e.target.value)
+    }
+  })
 
-    document.querySelector('#input').addEventListener('keydown', function (press) {
-      if (press.key === "Enter" && press.target.value.trim() !== "") {
+  document.querySelector('#addBtn').addEventListener('click', function(){
+    let content = document.querySelector("#input").value.trim()
+    return addItem(content)
+  })
 
-      const newToDo = document.createElement('li');
-      newToDo.innerText = inputValue.value.trim();
-      checkList.insertAdjacentElement('afterbegin', newToDo);
-      
-      const newSpan = document.createElement('span');
-      newToDo.insertAdjacentElement('afterbegin', newSpan);
-      newSpan.className = "close";
-      newSpan.innerText = "x";
-    };
-  });
+  function addItem(content) {
+    document.querySelector("#input").value = ''
+    if (content.length < 1) return
 
+    const { data } = createItem(content)
+    const storage = getStorage()
+    setStorage([...storage, data])
+  }
 
-  //Test
-  // var checkList = document.querySelector('ul');
+  function createItem(content) {
+    let li = document.createElement('li')
+    let span = document.createElement('span')
+    let ul = document.querySelector('ul')
+    span.appendChild(document.createTextNode('x'))
+    span.classList.add('close')
+    li.appendChild(span)
+    ul.appendChild(li)
 
-  // var allList = document.getElementsByClassName('close');
+    if (typeof content === 'string') {
+      li.appendChild(document.createTextNode(content))
+      li.dataset.id = Date.now()
+      let data = {
+        id: li.dataset.id,
+        content: content,
+        checked: false
+      }
+      return { data }
+    }
 
-  // console.log(allList);
+    if (typeof content === 'object') {
+      const { checked = false, id = false, content: text } = content
+      li.appendChild(document.createTextNode(text))
+      li.dataset.id = id
+      checked && li.classList.add('checked')
+    }
+  }
 
-  // console.log(Object.keys(allList));
+  function getStorage() {
+    return JSON.parse(localStorage.getItem('myLists')) || []
+  }
 
-  // if(!localStorage.getItem('close')) {
-  //   populateStorage();
-  // } else {
-  //   setList();
-  // }
-  
-  // function populateStorage() {
-  //   localStorage.setItem('close', document.getElementsByClassName('close').value);
-
-  //   setList();
-  // }
-
-
-  // function setList() {
-  //   var currentList = localStorage.getItem('close');
-
-  //   document.getElementsByClassName('close').value = currentList;
-  //   // console.log(Object.keys(currentList));
-  // }
-
-  // allList.onchange = populateStorage;
-
-
-});
+  function setStorage(data) {
+    localStorage.setItem('myLists', JSON.stringify(data))
+  }
+})
